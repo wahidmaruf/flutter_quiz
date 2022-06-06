@@ -14,7 +14,7 @@ class QuizApp extends StatelessWidget {
       home: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.light,
         child: Scaffold(
-          backgroundColor: Colors.grey.shade900,
+          backgroundColor: Colors.deepPurple.shade400,
           body: const SafeArea(
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 10.0),
