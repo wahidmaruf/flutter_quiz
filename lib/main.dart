@@ -9,13 +9,13 @@ class QuizApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
       home: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.light,
         child: Scaffold(
-          backgroundColor: Colors.deepPurple.shade400,
-          body: const SafeArea(
+          backgroundColor: Colors.deepPurple,
+          body: SafeArea(
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 10.0),
               child: QuizPage(),

@@ -77,7 +77,11 @@ class QuizPageState extends State<QuizPage> {
         Expanded(
           child: Padding(
             padding: const EdgeInsets.all(15.0),
-            child: TextButton(
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                shape: const StadiumBorder(),
+                backgroundColor: Colors.green.shade800,
+              ),
               child: const Text(
                 'True',
                 style: TextStyle(
@@ -96,7 +100,11 @@ class QuizPageState extends State<QuizPage> {
         Expanded(
           child: Padding(
             padding: const EdgeInsets.all(15.0),
-            child: TextButton(
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                shape: const StadiumBorder(),
+                backgroundColor: Colors.red.shade800,
+              ),
               child: const Text(
                 'False',
                 style: TextStyle(
@@ -111,6 +119,9 @@ class QuizPageState extends State<QuizPage> {
               },
             ),
           ),
+        ),
+        const SizedBox(
+          height: 20
         ),
         Row(
           children: scoreKeeper

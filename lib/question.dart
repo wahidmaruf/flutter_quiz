@@ -6,6 +6,4 @@ class Question {
     questionText = q;
     questionAnswer = a;
   }
-
-  // Question({required this.questionText, required this.questionAnswer});
 }
