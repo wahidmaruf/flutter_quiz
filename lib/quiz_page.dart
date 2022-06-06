@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_quiz/question.dart';
 import 'package:flutter_quiz/question_bank.dart';
 
 class QuizPage extends StatefulWidget {
@@ -14,22 +13,28 @@ class QuizPageState extends State<QuizPage> {
     const SizedBox(width: 24, height: 24)
   ];
   bool isLast = false;
-  List<Question> questionList = QuestionBank().questionList;
+  QuestionBank questionBank = QuestionBank();
 
-  void addScoreKeeper(bool isCorrect) {
-    if (questionList.length - 1 > index) {
-      index++;
-    } else if (questionList.length - 1 == index && !isLast) {
-      updateIcons(isCorrect);
-      isLast = true;
-      return;
-    } else {
+  void validateAnswer(bool userAnswer) {
+    if (questionBank.isIndexOutOfRange()) {
       return;
     }
-    updateIcons(isCorrect);
+    bool correctAnswer = questionBank.getQuestionAnswer();
+    if (correctAnswer == userAnswer) {
+      scoreKeeper.add(const Icon(Icons.check_circle, color: Colors.green));
+    } else {
+      scoreKeeper.add(const Icon(Icons.close_rounded, color: Colors.red));
+    }
+    setState(() {
+      questionBank.nextQuestion();
+    });
   }
 
-  void updateIcons(bool isCorrect) {
+  void addScoreKeeper(bool isCorrect) {
+    if (questionBank.isIndexOutOfRange()) {
+      return;
+    }
+
     if (isCorrect) {
       scoreKeeper.add(const Icon(Icons.check_circle, color: Colors.green));
     } else {
@@ -38,11 +43,9 @@ class QuizPageState extends State<QuizPage> {
   }
 
   void updateScoreKeeper() {
-    addScoreKeeper(questionList[index].questionAnswer == true);
-    index++;
+    addScoreKeeper(questionBank.getQuestionAnswer() == true);
   }
 
-  int index = 0;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -51,7 +54,7 @@ class QuizPageState extends State<QuizPage> {
       children: [
         IconButton(onPressed: () {
           setState(() {
-            index = 0;
+            questionBank.resetIndex();
             scoreKeeper = [
               const SizedBox(width: 24, height: 24)
             ];
@@ -64,7 +67,7 @@ class QuizPageState extends State<QuizPage> {
             padding: const EdgeInsets.all(10.0),
             child: Center(
               child: Text(
-                questionList[index].questionText,
+                questionBank.getQuestionText(),
                 textAlign: TextAlign.center,
                 style: const TextStyle(
                   fontSize: 25.0,
@@ -90,9 +93,7 @@ class QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
-                setState(() {
-                  addScoreKeeper(questionList[index].questionAnswer == true);
-                });
+                validateAnswer(true);
               },
             ),
           ),
@@ -113,9 +114,7 @@ class QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
-                setState(() {
-                  addScoreKeeper(questionList[index].questionAnswer == false);
-                });
+                validateAnswer(false);
               },
             ),
           ),

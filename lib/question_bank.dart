@@ -1,18 +1,45 @@
 import 'package:flutter_quiz/question.dart';
 
 class QuestionBank {
-  List<Question> questionList = [
-    Question(q: "Conductors have low resistance.", a: true),
-    Question(q: "The human body comprises four lungs.", a: false),
-    Question(q: "Carnivores are animal eaters.", a: true),
-    Question(q: "Mars is the closest planet to the Sun.", a: false),
-    Question(q: "You cannot cry in space.", a: true),
-    Question(q: "A range of mountains is called a range.", a: true),
-    Question(q: "Shinbone is the largest bone in the human body.", a: false),
-    Question(q: "Sudan and Egypt are known for pyramids.", a: true),
-    Question(q: "‘A’ is the most common alphabet in English.", a: false),
-    Question(q: "Canada is the second-largest country in the world.", a: true),
-    Question(q: "Mount Everest is present in the Himalayas.", a: true),
-    Question(q: "Some animals can get a sunburn.", a: true),
+  int _index = 0;
+  final List<Question> _questionList = [
+    Question("Conductors have low resistance.", true),
+    Question("The human body comprises four lungs.", false),
+    Question("Carnivores are animal eaters.", true),
+    Question("Mars is the closest planet to the Sun.", false),
+    Question("You cannot cry in space.", true),
+    Question("A range of mountains is called a range.", true),
+    Question("Shinbone is the largest bone in the human body.", false),
+    Question("Sudan and Egypt are known for pyramids.", true),
+    Question("‘A’ is the most common alphabet in English.", false),
+    Question("Canada is the second-largest country in the world.", true),
+    Question("Mount Everest is present in the Himalayas.", true),
+    Question("Some animals can get a sunburn.", true),
   ];
+
+  void nextQuestion() {
+    if (_index < _questionList.length - 1) {
+      _index++;
+    }
+  }
+
+  void resetIndex() {
+    _index = 0;
+  }
+
+  bool isIndexOutOfRange() {
+    if (_index >= _questionList.length - 1) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  String getQuestionText() {
+    return _questionList[_index].questionText;
+  }
+
+  bool getQuestionAnswer() {
+    return _questionList[_index].questionAnswer;
+  }
 }
