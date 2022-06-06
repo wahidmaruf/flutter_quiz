@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_quiz/question_bank.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 class QuizPage extends StatefulWidget {
   const QuizPage({super.key});
@@ -17,6 +18,7 @@ class QuizPageState extends State<QuizPage> {
 
   void validateAnswer(bool userAnswer) {
     if (questionBank.isIndexOutOfRange()) {
+      showAlert();
       return;
     }
     bool correctAnswer = questionBank.getQuestionAnswer();
@@ -28,6 +30,26 @@ class QuizPageState extends State<QuizPage> {
     setState(() {
       questionBank.nextQuestion();
     });
+  }
+
+  Future<void> showAlert() async {
+    await Alert(
+      context: context,
+      title: "Congratulations!",
+      desc: "You've answered all questions",
+      buttons: [
+        DialogButton(
+            child: const Text(
+              "Reset",
+              style: TextStyle(
+                color: Colors.white
+              ),
+            ),
+            onPressed: () => Navigator.pop(context)
+        )
+      ]
+    ).show();
+    reset();
   }
 
   void addScoreKeeper(bool isCorrect) {
@@ -46,6 +68,15 @@ class QuizPageState extends State<QuizPage> {
     addScoreKeeper(questionBank.getQuestionAnswer() == true);
   }
 
+  void reset() {
+    setState(() {
+      questionBank.resetIndex();
+      scoreKeeper = [
+        const SizedBox(width: 24, height: 24)
+      ];
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -54,10 +85,7 @@ class QuizPageState extends State<QuizPage> {
       children: [
         IconButton(onPressed: () {
           setState(() {
-            questionBank.resetIndex();
-            scoreKeeper = [
-              const SizedBox(width: 24, height: 24)
-            ];
+            reset();
             isLast = false;
           });
         }, icon: const Icon(Icons.reset_tv), color: Colors.white,),
