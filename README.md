@@ -6,3 +6,5 @@ Quiz App.
 
 A new Flutter Quiz App.
 
+![App Gif](app_animated.gif)
+
